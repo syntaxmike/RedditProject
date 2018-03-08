@@ -1,0 +1,17 @@
+{
+  "name": "reddit-app",
+  "version": "1.0.0",
+  "description": "Reddit application for interacting with the Reddit API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Antonio Garcia, Michael Oceguera, Edwin Ruiz, Hieu Tran",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^5.1.0",
+    "reddit": "file:../reddit",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {}
+}

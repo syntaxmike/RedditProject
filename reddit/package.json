@@ -1,0 +1,15 @@
+{
+  "name": "reddit",
+  "version": "1.0.0",
+  "description": "Reddit API Wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Antonio Garcia, Michael Oceguera, Edwin Ruiz, Hieu Tran",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^3.8.2"
+  },
+  "devDependencies": {}
+}
