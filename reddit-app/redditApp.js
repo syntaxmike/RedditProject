@@ -2,6 +2,8 @@ const
     redditAPI = require('reddit'),
     inquirer = require('inquirer')
 
+
+//Selection an interest from returned data
 const selectionPrompt = (results) => {
     return inquirer.prompt([{
         type: 'list',
@@ -26,16 +28,21 @@ const selectionPrompt = (results) => {
     })
 }
 
+//Displays sub-reddit's top threads at the moment
 const displayItem = (id) =>{
     redditAPI.idSearch(id)
         .then(idResult => {
             for(let index in idResult.data.children){
-                console.log(idResult.data.children[index].data.title)
+                console.log(JSON.stringify("Title: " + idResult.data.children[index].data.title + 
+                " | Up-votes: " +  idResult.data.children[index].data.ups  
+                //" | Url: " + idResult.data.children[index].data.url 
+                , null, 4))
             }
         })
         .catch(err => console.log(err))
 }
 
+//Initial start
 const interestSearch = (interest) => {
     redditAPI.search(interest)
         .then(results => {
