@@ -1,14 +1,15 @@
 const
     redditAPI = require('reddit'),
     inquirer = require('inquirer')
+    Table = require('cli-table');
 
 
-//Selection an interest from returned data
+//Select a subreddit from returned data
 const selectionPrompt = (results) => {
     return inquirer.prompt([{
         type: 'list',
         name: 'results',
-        message: 'Select a Sub-Reddit to see the Top threads at the moment: ',
+        message: 'Select a Sub-Reddit to see the top threads at the moment: ',
         pageSize: results.length,
         choices: results.map(subs => `${subs.display_name_prefixed}`),
         validate: (answers) => {
@@ -30,14 +31,15 @@ const selectionPrompt = (results) => {
 
 //Displays sub-reddit's top threads at the moment
 const displayItem = (id) =>{
+    let table = new Table({ head: ["", "Title", "Upvotes"] });
     redditAPI.idSearch(id)
         .then(idResult => {
             for(let index in idResult.data.children){
-                console.log(JSON.stringify("Title: " + idResult.data.children[index].data.title + 
-                " | Up-votes: " +  idResult.data.children[index].data.ups  
-                //" | Url: " + idResult.data.children[index].data.url 
-                , null, 4))
+
+                table.push({"": [idResult.data.children[index].data.title, idResult.data.children[index].data.ups]})
             }
+
+            console.log(table.toString())
         })
         .catch(err => console.log(err))
 }
