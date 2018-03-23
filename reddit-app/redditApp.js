@@ -23,8 +23,8 @@ const selectionPrompt = (results) => {
                 
         }
     }])
-    .then((answer) => {
-        displayItem(answer.results)
+    .then((answers) => {
+        displayItem(answers.results)
     })
 }
 

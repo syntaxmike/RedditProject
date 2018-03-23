@@ -14,5 +14,5 @@ exports.search = (query) => {
 }
 
 exports.idSearch = (id) => {
-    return _fetchSearch(`r/${id}/top/.json?count=20`)
+    return _fetchSearch(`${id}/top/.json?count=20`)
 }
