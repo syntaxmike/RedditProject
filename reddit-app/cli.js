@@ -6,14 +6,14 @@ const
 const flags = yargs.usage('$0: Usage <cmd> [options]')
     .command({
         command: 'search',
-        desc: 'Search for Sub-Reddit names that match your interest',
+        desc: 'Search for Sub-Reddits',
         builder: (yargs) => {
-            return yargs.option('interest', {
-                alias: 'i',
-                describe: 'An interest of yours'
+            return yargs.option('topic', {
+                alias: 't',
+                describe: 'Search By Topic'
             })
         },
-        handler: (argv) => { app.interestSearch(argv.interest) }
+        handler: (argv) => { app.interestSearch(argv.topic) }
     })
     .help('help')
     .argv

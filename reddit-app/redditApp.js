@@ -8,9 +8,9 @@ const selectionPrompt = (results) => {
     return inquirer.prompt([{
         type: 'list',
         name: 'results',
-        message: 'Select a Sub-Reddit to learn more about: ',
+        message: 'Select a Sub-Reddit to see the Top threads at the moment: ',
         pageSize: results.length,
-        choices: results.map(names => `${names.name}`),
+        choices: results.map(subs => `${subs.display_name_prefixed}`),
         validate: (answers) => {
     
             if(answers.length == 1){
@@ -44,9 +44,13 @@ const displayItem = (id) =>{
 
 //Initial start
 const interestSearch = (interest) => {
+    let subReddits = []
     redditAPI.search(interest)
         .then(results => {
-            selectionPrompt(results)
+            for(let index in results.data.children){
+                subReddits.push(results.data.children[index].data)
+            }
+            selectionPrompt(subReddits)
         })
         .catch(err => console.log(err))
 }
