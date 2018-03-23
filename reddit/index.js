@@ -9,8 +9,8 @@ const _fetchSearch = (command) => {
         .catch(error => error.response.body)
 }
 
-exports.search = (query) => {
-    return _fetchSearch(`subreddits/search.json?limit=20&q=${query}`)
+exports.search = (query, count) => {
+    return _fetchSearch(`subreddits/search.json?limit=${count}&q=${query}`)
 }
 
 exports.idSearch = (id) => {

@@ -43,9 +43,9 @@ const displayItem = (id) =>{
 }
 
 //Initial start
-const interestSearch = (interest) => {
+const interestSearch = (interest, count = 20) => {
     let subReddits = []
-    redditAPI.search(interest)
+    redditAPI.search(interest, count)
         .then(results => {
             for(let index in results.data.children){
                 subReddits.push(results.data.children[index].data)
