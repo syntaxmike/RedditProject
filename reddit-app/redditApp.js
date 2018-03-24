@@ -1,7 +1,7 @@
 const
     redditAPI = require('reddit'),
     inquirer = require('inquirer')
-    Table = require('cli-table');
+    Table = require('cli-table2');
 
 
 //Select a subreddit from returned data
@@ -27,7 +27,7 @@ const selectionPrompt = (results) => {
         type: 'list',
         name: 'toshow',
         message: 'Select which threads to display: ',
-        choices: ["Top", "Hot"],
+        choices: ["top", "hot"],
         validate: (answers) => {
     
             if(answers){
@@ -50,16 +50,24 @@ const selectionPrompt = (results) => {
 const displayItem = (id, show) =>{
 
     //if top is selected show this, else show hot threads
-    let table = new Table({ head: ["Author", "Thread Title/Link", "Upvotes"]})
-    redditAPI.idSearch(id)
+    let table = new Table({ head: ["Author", "Thread Info"]})
+    redditAPI.idSearch(id, show)
         .then(idResult => {
+            
             for(let index in idResult.data.children){
 
+                let size = idResult.data.children[index].data.title.length
+
                 table.push({[idResult.data.children[index].data.author]: 
-                    [idResult.data.children[index].data.title + 
-                    "\n\n" + 
-                    idResult.data.children[index].data.url, 
-                    idResult.data.children[index].data.ups]})
+
+                    ["Title: " + idResult.data.children[index].data.title.slice(0, 240)
+                    +"\n    " + idResult.data.children[index].data.title.slice(240, size)
+                    +"\nUpvotes: " +
+                    idResult.data.children[index].data.ups
+                    +"\n# of Comments: " +
+                    idResult.data.children[index].data.num_comments 
+                    +"\nUrl to comments: reddit.com" + 
+                    idResult.data.children[index].data.permalink]})
             }
 
             console.log(table.toString())
@@ -67,7 +75,7 @@ const displayItem = (id, show) =>{
         .catch(err => console.log(err))
 }
 
-//Initial start
+//Initial name start
 const interestSearch = (interest, count = 20) => {
     let subReddits = []
     redditAPI.search(interest, count)
@@ -80,7 +88,35 @@ const interestSearch = (interest, count = 20) => {
         .catch(err => console.log(err))
 }
 
+//Initial topic start
+const topic = (interest) => {
+    let subReddits = []
+    redditAPI.byTopic(interest)
+    .then(results => {
+        for(let index in results){
+            subReddits.push(results[index])
+        }
+         selectionPrompt(subReddits)
+    })
+    .catch(err => console.log(err))
+}
+
+//Initial start for popular search
+const popular = () => {
+    let subReddits = []
+    redditAPI.popular()
+    .then(results => {
+        for(let index in results.data.children){
+            subReddits.push(results.data.children[index].data)
+        }
+        selectionPrompt(subReddits)
+    })
+    .catch(err => console.log(err))
+}
+
 
 module.exports = {
-    interestSearch
+    interestSearch, 
+    popular,
+    topic
 }
