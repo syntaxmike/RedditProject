@@ -1,4 +1,3 @@
-
 const
      config = require('./config'),
      superagent = require('superagent')
@@ -14,6 +13,15 @@ exports.search = (query, count) => {
     return _fetchSearch(`subreddits/search.json?limit=${count}&q=${query}`)
 }
 
-exports.idSearch = (id) => {
-    return _fetchSearch(`${id}/top/.json?count=20`)
+exports.popular = () => {
+	 return _fetchSearch(`subreddits/popular.json`)
+
+}
+
+exports.idSearch = (id,choice) => {
+    return _fetchSearch(`${id}/${choice}/.json?count=20`)
+}
+
+exports.byTopic = (query) => {
+    return _fetchSearch(`api/subreddits_by_topic.json?query=${query}`)
 }
