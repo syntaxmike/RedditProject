@@ -23,20 +23,43 @@ const selectionPrompt = (results) => {
             }
                 
         }
-    }])
+    },{
+        type: 'list',
+        name: 'toshow',
+        message: 'Select which threads to display: ',
+        choices: ["Top", "Hot"],
+        validate: (answers) => {
+    
+            if(answers){
+                return true
+            }
+    
+            else{
+                return 'Something went wrong'
+            }
+                
+        }
+    }
+    ])
     .then((answers) => {
-        displayItem(answers.results)
+        displayItem(answers.results, answers.toshow)
     })
 }
 
 //Displays sub-reddit's top threads at the moment
-const displayItem = (id) =>{
-    let table = new Table({ head: ["", "Title", "Upvotes"] });
+const displayItem = (id, show) =>{
+
+    //if top is selected show this, else show hot threads
+    let table = new Table({ head: ["Author", "Thread Title/Link", "Upvotes"]})
     redditAPI.idSearch(id)
         .then(idResult => {
             for(let index in idResult.data.children){
 
-                table.push({"": [idResult.data.children[index].data.title, idResult.data.children[index].data.ups]})
+                table.push({[idResult.data.children[index].data.author]: 
+                    [idResult.data.children[index].data.title + 
+                    "\n\n" + 
+                    idResult.data.children[index].data.url, 
+                    idResult.data.children[index].data.ups]})
             }
 
             console.log(table.toString())
