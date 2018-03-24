@@ -4,12 +4,19 @@ const
 
 
 const flags = yargs.usage('$0: Usage <cmd> [options]')
-     .command({
-        command: 'search <query> <num>',
+      .command({
+        command: 'search',
         desc: 'Search for Sub-Reddits',
-        handler: (argv) => { app.interestSearch(argv.query, argv.num) }
+        builder: (yargs) => {
+            return yargs.option('name', {
+                alias: 'n',
+                describe: 'Search By Sub-Reddit name'
+            }).option('count', {
+                alias: 'c',
+                describe: 'Number of Sub-Reddits to display in search'
+            })
+        },
+        handler: (argv) => { app.interestSearch(argv.name, argv.count) }
     })
-    .showHelpOnFail(true)
-    .demandCommand(1, '')
     .help('help')
     .argv
