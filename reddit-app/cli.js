@@ -34,5 +34,6 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         desc: 'Search for Popular Sub-Reddits',
         handler: (argv) => { app.popular() }
     })
+    .demandCommand()
     .help('help')
     .argv

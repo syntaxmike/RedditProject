@@ -55,15 +55,23 @@ const displayItem = (id, show) =>{
         .then(idResult => {
             
             for(let index in idResult.data.children){
+                let title,
+                    size = idResult.data.children[index].data.title.length
+
+                if(size > 220){
+                    title = idResult.data.children[index].data.title.slice(0, 220) + "..."
+                }else{
+                    title = idResult.data.children[index].data.title
+                }
 
                 table.push({[idResult.data.children[index].data.author]: 
 
-                    ["Title: " + idResult.data.children[index].data.title.slice(0, 250) + "..."
+                    ["Title: " + title
                     +"\nUpvotes: " +
                     idResult.data.children[index].data.ups
                     +"\n# of Comments: " +
                     idResult.data.children[index].data.num_comments 
-                    +"\nUrl to comments: reddit.com" + 
+                    +"\nUrl to comments: www.reddit.com" + 
                     idResult.data.children[index].data.permalink]})
             }
 
