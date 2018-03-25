@@ -60,8 +60,7 @@ const displayItem = (id, show) =>{
 
                 table.push({[idResult.data.children[index].data.author]: 
 
-                    ["Title: " + idResult.data.children[index].data.title.slice(0, 240)
-                    +"\n    " + idResult.data.children[index].data.title.slice(240, size)
+                    ["Title: " + idResult.data.children[index].data.title.slice(0, 250) + "..."
                     +"\nUpvotes: " +
                     idResult.data.children[index].data.ups
                     +"\n# of Comments: " +
