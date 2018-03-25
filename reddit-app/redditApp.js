@@ -56,8 +56,6 @@ const displayItem = (id, show) =>{
             
             for(let index in idResult.data.children){
 
-                let size = idResult.data.children[index].data.title.length
-
                 table.push({[idResult.data.children[index].data.author]: 
 
                     ["Title: " + idResult.data.children[index].data.title.slice(0, 250) + "..."
