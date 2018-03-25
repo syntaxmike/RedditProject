@@ -49,14 +49,19 @@ const selectionPrompt = (results) => {
 //Displays sub-reddit's top threads at the moment
 const displayItem = (id, show) =>{
 
+    let table = new Table({ head: [`${id}`]})
+
     //if top is selected show this, else show hot threads
-    let table = new Table({ head: ["Author", "Thread Info"]})
     redditAPI.idSearch(id, show)
         .then(idResult => {
             
             for(let index in idResult.data.children){
                 let title,
-                    size = idResult.data.children[index].data.title.length
+                    author = idResult.data.children[index].data.author,
+                    size = idResult.data.children[index].data.title.length,
+                    up = idResult.data.children[index].data.ups,
+                    numComments = idResult.data.children[index].data.num_comments,
+                    link = idResult.data.children[index].data.permalink
 
                 if(size > 220){
                     title = idResult.data.children[index].data.title.slice(0, 220) + "..."
@@ -64,15 +69,13 @@ const displayItem = (id, show) =>{
                     title = idResult.data.children[index].data.title
                 }
 
-                table.push({[idResult.data.children[index].data.author]: 
 
+                table.push(
                     ["Title: " + title
-                    +"\nUpvotes: " +
-                    idResult.data.children[index].data.ups
-                    +"\n# of Comments: " +
-                    idResult.data.children[index].data.num_comments 
-                    +"\nUrl to comments: www.reddit.com" + 
-                    idResult.data.children[index].data.permalink]})
+                    +"\nAuthor: " + author
+                    +"\nUpvotes: " + up
+                    +"\n# of Comments: " + numComments
+                    +"\nUrl to comments: www.reddit.com" +  link])
             }
 
             console.log(table.toString())
